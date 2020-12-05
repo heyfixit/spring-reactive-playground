@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @RestController
 @AllArgsConstructor
@@ -14,7 +15,7 @@ public class ThingController {
     private final ThingService thingService;
 
     @GetMapping(value = "/")
-    public Flux<String> getThings() throws JsonProcessingException {
-        return thingService.getThings();
+    public Mono<String> getThings() {
+        return thingService.retryTwice();
     }
 }
